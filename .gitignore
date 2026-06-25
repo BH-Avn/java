@@ -1,2 +1,11 @@
 bin/
+out/
 .vscode/
+
+# Compiled bytecode
+*.class
+
+# Runtime data (app-generated, not source)
+Formula_database.txt
+*.db
+audit_log.txt

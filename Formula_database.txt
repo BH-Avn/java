@@ -1,2 +1,0 @@
-LASTINDEX:1
-ID:1<PIPE>EXPRESSION:sin^2x+cos^2x=1<PIPE>TYPE:identity<PIPE>CATEGORY:pythagorean identity<PIPE>KEYWORDS:{sin^2, cos^2, 1}
