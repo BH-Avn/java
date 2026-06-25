@@ -2,7 +2,7 @@
 
 A collection of Java projects and exercises built while learning the language.
 
-> **Note:** All code in this repo is written by me. Claude was only used for formatting and documentation.
+> **Note:** All code in this repo is written by me. Formatting and documentation by Claude.
 
 ---
 
