@@ -312,7 +312,7 @@ class Set {
     Set union(Set A, Set B) {
 
         Set C = new Set(A.size + B.size);
-        iny k = 0;
+        int k = 0;
 
         for (int i = 0; i < A.size; i++) {
             C.arr[k++] = A.arr[i];
@@ -335,7 +335,7 @@ class Set {
         return C;
     }
 
-    Set differenece(Set A, Set B) {
+    Set difference(Set A, Set B) {
 
         Set C = new Set(A.size);
 
@@ -350,7 +350,7 @@ class Set {
                 }
             }
             if (!found) {
-                C.arr[k++] = B.arr[i];
+                C.arr[k++] = A.arr[i];
             }
         }
 
