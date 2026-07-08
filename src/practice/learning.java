@@ -312,13 +312,34 @@ class Set {
     Set union(Set A, Set B) {
 
         Set C = new Set(A.size + B.size);
+        iny k = 0;
 
-        for (int i = 0; i < A.size; i++) {
-            C.arr[i] = A.arr[i];
-        }
         for (int i = 0; i < A.size; i++) {
             C.arr[k++] = A.arr[i];
         }
+
+        for (int i = 0; i < B.size; i++) {
+            boolean found = false;
+            for (int j = 0; j < A.size; j++) {
+                if (B.arr[i] == A.arr[j]) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                C.arr[k++] = B.arr[i];
+            }
+        }
+
+        C.size = k;
+        return C;
+    }
+
+    Set differenece(Set A, Set B) {
+
+        Set C = new Set(A.size);
+
+        int k = 0;
 
         for (int i = 0; i < B.size; i++) {
             boolean found = false;
