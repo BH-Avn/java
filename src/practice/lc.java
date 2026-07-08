@@ -29,4 +29,23 @@ class lc {
         }
         return false;
     }
+ static int sliding_window(int n[], int k) {
+
+        int s = 0;
+        for (int i = 0; i < k; i++) {
+            s += n[i];
+        }
+
+        for (int i = k; i < n.length; i++) {
+            s += n[i] - n[i - k];
+        }
+        return s;
+    }
+ 
+    public static void main(String ar[])
+    {
+        int arr[]={1,23,43,5455,654,34};
+
+        sliding_window(arr,2);
+    }
 }
