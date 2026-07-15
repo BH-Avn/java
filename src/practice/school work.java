@@ -5,7 +5,8 @@ import java.util.Scanner;
 class digitToWord {
     String l1[] = { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
     String l2[] = { "", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety" };
-    String l3[] = { "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen" };
+    String l3[] = { "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen",
+            "Nineteen" };
 
     String ones(int n) {
         return " " + l1[n];
@@ -68,21 +69,91 @@ class digitToWord {
 
 }
 
+
+
+ class NumberToWords {
+     String[] ones = { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
+     String[] teens = { "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
+            "Eighteen", "Nineteen" };
+     String[] tens = { "", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety" };
+
+     String twoDigit(int num) {
+        if (num == 0)
+            return "";
+        if (num < 10)
+            return ones[num];
+        if (num < 20)
+            return teens[num - 10];
+        return (tens[num / 10] + " " + ones[num % 10]).trim();
+    }
+
+     String threeDigit(int num) {
+        StringBuilder sb = new StringBuilder();
+        if (num >= 100) {
+            sb.append(ones[num / 100]).append(" Hundred ");
+            num %= 100;
+        }
+        sb.append(twoDigit(num));
+        return sb.toString().trim();
+    }
+
+     String convert(long num) {
+        if (num == 0)
+            return "Zero";
+
+        long crore = num / 10000000;
+        num %= 10000000;
+        long lakh = num / 100000;
+        num %= 100000;
+        long thousand = num / 1000;
+        num %= 1000;
+        long hundred = num;
+
+        StringBuilder result = new StringBuilder();
+
+        if (crore > 0)
+            result.append(threeDigit((int) crore)).append(" Crore ");
+        if (lakh > 0)
+            result.append(twoDigit((int) lakh)).append(" Lakh ");
+        if (thousand > 0)
+            result.append(twoDigit((int) thousand)).append(" Thousand ");
+        if (hundred > 0)
+            result.append(threeDigit((int) hundred));
+
+        return result.toString().trim();
+    }
+
+    
+}
+
 class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter a number: ");
-        int n = sc.nextInt();
 
-        digitToWord obj = new digitToWord();
+        System.out.println("Choose a converter:");
+        System.out.println("1. digitToWord (recursive)");
+        System.out.println("2. NumberToWords (iterative)");
+        System.out.print("Enter choice: ");
+        int choice = sc.nextInt();
+
+        System.out.print("Enter a number: ");
+        long n = sc.nextLong();
+
         String result;
 
-        if (n == 0)
-            result = "Zero";
-        else if (n < 0)
-            result = "Negative.." + obj.selector(-n);
-        else
-            result = obj.selector(n);
+        if (choice == 2) {
+            NumberToWords obj = new NumberToWords();
+            result = (n < 0) ? "Negative.." + obj.convert(-n) : obj.convert(n);
+        } else {
+            digitToWord obj = new digitToWord();
+            int num = (int) n;
+            if (num == 0)
+                result = "Zero";
+            else if (num < 0)
+                result = "Negative.." + obj.selector(-num);
+            else
+                result = obj.selector(num);
+        }
 
         System.out.println(result.trim());
         sc.close();
