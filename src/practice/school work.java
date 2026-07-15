@@ -5,12 +5,15 @@ import java.util.Scanner;
 class digitToWord {
     String l1[] = { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
     String l2[] = { "", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety" };
+    String l3[] = { "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen" };
 
     String ones(int n) {
         return " " + l1[n];
     }
 
     String tens(int n) {
+        if (n < 20)
+            return " " + l3[n - 10];
         return " " + l2[n / 10] + ones(n % 10);
     }
 
