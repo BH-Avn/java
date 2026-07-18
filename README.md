@@ -36,12 +36,34 @@ java -cp bin completed.equations
 
 ## Practice
 
+Every practice class is runnable through **Runner** (`src/practice/Runner.java`) — a
+terminal launcher that scans the compiled `.class` files in `bin/practice` (including
+package-private classes sharing a file with others) and runs whichever one you pick.
+
+**Workflow:** new practice code is either a method added to an existing class, or a whole
+new class — either way, give it a public no-arg `run()` (instance method) or a
+`public static void main(String[])`, then test it through Runner instead of writing a
+one-off launcher.
+
+**Run:**
+```bash
+javac -d bin -cp bin src/practice/*.java "src/practice/school work.java" src/utils/Base.java
+java -cp bin practice.Runner
+```
+
+- Shows recent runs (last 5, cached in `bin/practice/runner_history.json`) and all eligible
+  classes in one numbered menu — pick a number, or type a class name directly.
+- `java -cp bin practice.Runner --ClassName` skips the menu and runs that class immediately,
+  then continues into the normal "Run another?" loop.
+- Ineligible classes are listed under "Not runnable" with a reason instead of being hidden.
+
 | File | Contents |
 |---|---|
-| `src/practice/lc.java` | LeetCode problems (e.g. Contains Duplicate II) |
-| `src/practice/learning.java` | Class exercises: OOP, sorting, file I/O, SQLite basics |
-| `src/practice/re_1.java` | Recursion + string problems: palindrome, Tower of Hanoi, spiral matrix, anagram, etc. |
-| `src/practice/recursion.java` | Recursive fundamentals: digit sum, power, permutations, array reverse |
+| `src/practice/lc.java` | `lc` — LeetCode problems: Contains Duplicate II, sliding window sum |
+| `src/practice/learning.java` | `InkiPinkiPonki` — electron shell-filling demo |
+| `src/practice/re_1.java` | Three classes: `re_1` (recursion — count/palindrome/Tower of Hanoi), `sp` (grid + string utilities — spiral matrix, anagram, prime checks, string compression, etc.), `school` (matrix multiply, cow-distribution trick, int palindrome) |
+| `src/practice/recursion.java` | `recursion` — digit sum, string palindrome, array reverse, power, find max, string permutations |
+| `src/practice/school work.java` | `digitToWord` / `NumberToWords` — two number-to-words converters, plus `Main` to choose between them |
 
 ---
 
@@ -63,7 +85,7 @@ docs/
 ## Requirements
 - Java 11+
 - No build tool required — compile manually with `javac` as shown above
-- SQLite driver in `lib/` is only needed for the SQLite exercises in `learning.java`
+- SQLite driver in `lib/` isn't currently used by any active exercise (kept for future SQLite practice)
 
 ---
 

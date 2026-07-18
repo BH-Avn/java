@@ -1,6 +1,7 @@
 package practice;
 
 import java.util.Scanner;
+import static utils.Base.scanner;
 
 class digitToWord {
     String l1[] = { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
@@ -128,7 +129,7 @@ class digitToWord {
 
 class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = scanner; // shared utils.Base.scanner - see Runner.java for why
 
         System.out.println("Choose a converter:");
         System.out.println("1. digitToWord (recursive)");
@@ -138,6 +139,7 @@ class Main {
 
         System.out.print("Enter a number: ");
         long n = sc.nextLong();
+        sc.nextLine(); // nextLong() leaves the trailing newline unconsumed - flush it
 
         String result;
 
@@ -156,6 +158,6 @@ class Main {
         }
 
         System.out.println(result.trim());
-        sc.close();
+        // Not closing sc: this runs through Runner too, which reuses System.in afterwards.
     }
 }
