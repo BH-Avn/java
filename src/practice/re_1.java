@@ -1,7 +1,8 @@
 package practice;
 
-//recursion 
+//recursion
 import java.util.*;
+import static utils.Base.scanner;
 
 class re_1 { // find number of 'a'
     int count(String s1) {
@@ -28,10 +29,46 @@ class re_1 { // find number of 'a'
         System.out.println("Move disk " + n + "from " + st + "to " + end);
         hanoi(n - 1, helper, st, end);
     }
+
+    // Runnable via Runner (java -cp bin practice.Runner --re_1). Not closing sc:
+    // Runner keeps using System.in afterwards for its own "Run another?" prompt.
+    public static void main(String[] args) {
+        Scanner sc = scanner; // shared utils.Base.scanner - see Runner.java for why
+        re_1 obj = new re_1();
+
+        System.out.println("1. count      - count occurrences of 'a' in a string");
+        System.out.println("2. palindrome - check if a string is a palindrome");
+        System.out.println("3. hanoi      - print Tower of Hanoi moves");
+        System.out.print("Choose a method: ");
+        int choice = Integer.parseInt(sc.nextLine().trim());
+
+        switch (choice) {
+            case 1: {
+                System.out.print("Enter string: ");
+                String s = sc.nextLine();
+                System.out.println("Count of 'a': " + obj.count(s));
+                break;
+            }
+            case 2: {
+                System.out.print("Enter string: ");
+                String s = sc.nextLine();
+                System.out.println("Is palindrome: " + obj.palindrome(s));
+                break;
+            }
+            case 3: {
+                System.out.print("Enter number of disks: ");
+                int n = Integer.parseInt(sc.nextLine().trim());
+                obj.hanoi(n, 'A', 'B', 'C');
+                break;
+            }
+            default:
+                System.out.println("Invalid choice.");
+        }
+    }
 }
 
 class sp {
-    Scanner sc = new Scanner(System.in);
+    Scanner sc = scanner; // shared utils.Base.scanner - see Runner.java for why
     int ar[][];
     char arr[][];
     int size;
@@ -350,6 +387,156 @@ class sp {
         return (sb1.length() < s1.length()) ? sb1.toString() : s1;
     }
 
+    // Runnable via Runner (java -cp bin practice.Runner --sp). sp has no no-arg
+    // constructor by design, so it's only reachable through this static main().
+    public static void main(String[] args) {
+        Scanner sc = scanner; // shared utils.Base.scanner - see Runner.java for why
+
+        System.out.println(" 1. fill                - fill an n x n grid, then check its border for a palindrome");
+        System.out.println(" 2. spiralPrintr        - spiral-read an r x c grid of characters");
+        System.out.println(" 3. rotate              - rotate an n x n int grid 90 degrees (demo grid is all zeros)");
+        System.out.println(" 4. reverseWordsInPlace - reverse each word's letters in a sentence");
+        System.out.println(" 5. spyNumber           - digit sum == digit product?");
+        System.out.println(" 6. isKaprekar          - Kaprekar number check");
+        System.out.println(" 7. isPrime             - primality check");
+        System.out.println(" 8. isCircularPrime     - circular prime check");
+        System.out.println(" 9. removeDup           - remove adjacent duplicate characters");
+        System.out.println("10. noRepeat            - length of the longest substring without repeats");
+        System.out.println("11. firstNoRepeat       - index of the first non-repeating character (O(n^2))");
+        System.out.println("12. firstNoRepeat2      - first non-repeating character (O(n))");
+        System.out.println("13. Anagram             - check if two strings are anagrams");
+        System.out.println("14. hiddenWord          - check if s2 is a rotation of s1");
+        System.out.println("15. stringcompression   - run-length compress a string");
+        System.out.print("Choose a method: ");
+        int choice = Integer.parseInt(sc.nextLine().trim());
+
+        switch (choice) {
+            case 1: {
+                System.out.print("Enter grid size n: ");
+                int n = Integer.parseInt(sc.nextLine().trim());
+                sp obj = new sp(n);
+                obj.fill();
+                sc.nextLine(); // fill() reads with next(), which leaves the trailing newline unconsumed
+                obj.last();
+                break;
+            }
+            case 2: {
+                System.out.print("Enter rows: ");
+                int r = Integer.parseInt(sc.nextLine().trim());
+                System.out.print("Enter columns: ");
+                int c = Integer.parseInt(sc.nextLine().trim());
+                sp obj = new sp(r, c);
+                System.out.println("Enter characters:");
+                for (int i = 0; i < r; i++) {
+                    for (int j = 0; j < c; j++) {
+                        obj.arr[i][j] = Character.toUpperCase(sc.next().charAt(0));
+                    }
+                }
+                sc.nextLine(); // consume the trailing newline left after reading tokens
+                obj.spiralPrintr();
+                System.out.println("Spiral order: " + obj.s1.toString());
+                break;
+            }
+            case 3: {
+                System.out.print("Enter grid size n: ");
+                int n = Integer.parseInt(sc.nextLine().trim());
+                sp obj = new sp(n);
+                obj.rotate();
+                System.out.println("Rotated (all zeros - ar[][] was never filled in this demo).");
+                break;
+            }
+            case 4: {
+                System.out.print("Enter sentence: ");
+                String s = sc.nextLine();
+                sp obj = new sp(0);
+                System.out.println("Reversed: " + obj.reverseWordsInPlace(s));
+                break;
+            }
+            case 5: {
+                System.out.print("Enter number: ");
+                int n = Integer.parseInt(sc.nextLine().trim());
+                sp obj = new sp(0);
+                System.out.println("Is spy number: " + obj.spyNumber(n));
+                break;
+            }
+            case 6: {
+                System.out.print("Enter number: ");
+                int n = Integer.parseInt(sc.nextLine().trim());
+                sp obj = new sp(0);
+                System.out.println("Is Kaprekar: " + obj.isKaprekar(n));
+                break;
+            }
+            case 7: {
+                System.out.print("Enter number: ");
+                int n = Integer.parseInt(sc.nextLine().trim());
+                sp obj = new sp(0);
+                System.out.println("Is prime: " + obj.isPrime(n));
+                break;
+            }
+            case 8: {
+                System.out.print("Enter number: ");
+                int n = Integer.parseInt(sc.nextLine().trim());
+                sp obj = new sp(0);
+                System.out.println("Is circular prime: " + obj.isCircularPrime(n));
+                break;
+            }
+            case 9: {
+                System.out.print("Enter string: ");
+                String s = sc.nextLine();
+                sp obj = new sp(0);
+                System.out.println("Result: " + obj.removeDup(s));
+                break;
+            }
+            case 10: {
+                System.out.print("Enter string: ");
+                String s = sc.nextLine();
+                sp obj = new sp(0);
+                obj.noRepeat(s);
+                break;
+            }
+            case 11: {
+                System.out.print("Enter string: ");
+                String s = sc.nextLine();
+                sp obj = new sp(0);
+                obj.firstNoRepeat(s);
+                break;
+            }
+            case 12: {
+                System.out.print("Enter string: ");
+                String s = sc.nextLine();
+                sp obj = new sp(0);
+                obj.firstNoRepeat2(s);
+                break;
+            }
+            case 13: {
+                System.out.print("Enter first string: ");
+                String s1 = sc.nextLine();
+                System.out.print("Enter second string: ");
+                String s2 = sc.nextLine();
+                sp obj = new sp(0);
+                System.out.println("Are anagrams: " + obj.Anagram(s1, s2));
+                break;
+            }
+            case 14: {
+                System.out.print("Enter base string: ");
+                String s1 = sc.nextLine();
+                System.out.print("Enter word to find: ");
+                String s2 = sc.nextLine();
+                sp obj = new sp(0);
+                System.out.println("Contains rotated word: " + obj.hiddenWord(s1, s2));
+                break;
+            }
+            case 15: {
+                System.out.print("Enter string: ");
+                String s = sc.nextLine();
+                sp obj = new sp(0);
+                System.out.println("Compressed: " + obj.stringcompression(s));
+                break;
+            }
+            default:
+                System.out.println("Invalid choice.");
+        }
+    }
 }
 
 class school {
@@ -422,5 +609,79 @@ class school {
 
         }
         return mul;
+    }
+
+    // Runnable via Runner (java -cp bin practice.Runner --school).
+    public static void main(String[] args) {
+        Scanner sc = scanner; // shared utils.Base.scanner - see Runner.java for why
+        school obj = new school();
+
+        System.out.println("1. circular_Trick - cow-distribution demo for n children");
+        System.out.println("2. symetric_array - transpose-style shuffle of a square int matrix");
+        System.out.println("3. isPalindrome   - check if an int reads the same forwards and backwards");
+        System.out.println("4. multiply       - multiply two int matrices");
+        System.out.print("Choose a method: ");
+        int choice = Integer.parseInt(sc.nextLine().trim());
+
+        switch (choice) {
+            case 1: {
+                System.out.print("Enter n: ");
+                int n = Integer.parseInt(sc.nextLine().trim());
+                obj.circular_Trick(n);
+                break;
+            }
+            case 2: {
+                System.out.print("Enter matrix size n: ");
+                int n = Integer.parseInt(sc.nextLine().trim());
+                int[][] arr = readMatrix(sc, n, n);
+                obj.symetric_array(arr);
+                System.out.println("Result:");
+                printMatrix(arr);
+                break;
+            }
+            case 3: {
+                System.out.print("Enter number: ");
+                int x = Integer.parseInt(sc.nextLine().trim());
+                System.out.println("Is palindrome: " + obj.isPalindrome(x));
+                break;
+            }
+            case 4: {
+                System.out.print("Enter rows and columns of matrix A (e.g. 2 3): ");
+                String[] dimsA = sc.nextLine().trim().split("\\s+");
+                int[][] a = readMatrix(sc, Integer.parseInt(dimsA[0]), Integer.parseInt(dimsA[1]));
+
+                System.out.print("Enter rows and columns of matrix B (e.g. 3 2): ");
+                String[] dimsB = sc.nextLine().trim().split("\\s+");
+                int[][] b = readMatrix(sc, Integer.parseInt(dimsB[0]), Integer.parseInt(dimsB[1]));
+
+                System.out.println("Result:");
+                printMatrix(obj.multiply(a, b));
+                break;
+            }
+            default:
+                System.out.println("Invalid choice.");
+        }
+    }
+
+    private static int[][] readMatrix(Scanner sc, int rows, int cols) {
+        System.out.println("Enter " + rows + "x" + cols + " matrix, row by row (space-separated):");
+        int[][] m = new int[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            String[] parts = sc.nextLine().trim().split("\\s+");
+            for (int j = 0; j < cols; j++) {
+                m[i][j] = Integer.parseInt(parts[j]);
+            }
+        }
+        return m;
+    }
+
+    private static void printMatrix(int[][] m) {
+        if (m == null) {
+            System.out.println("(null)");
+            return;
+        }
+        for (int[] row : m) {
+            System.out.println(Arrays.toString(row));
+        }
     }
 }

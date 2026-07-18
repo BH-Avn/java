@@ -1,6 +1,7 @@
 package practice;
 
 import java.util.*;
+import static utils.Base.scanner;
 
 class lc {
     /*
@@ -42,10 +43,43 @@ class lc {
         return s;
     }
  
-    public static void main(String ar[])
-    {
-        int arr[]={1,23,43,5455,654,34};
+    // Runnable via Runner (java -cp bin practice.Runner --lc).
+    public static void main(String[] args) {
+        Scanner sc = scanner; // shared utils.Base.scanner - see Runner.java for why
+        lc obj = new lc();
 
-        sliding_window(arr,2);
+        System.out.println("1. problem1       - contains duplicate within distance k");
+        System.out.println("2. sliding_window - sum of the first k-sized window");
+        System.out.print("Choose a method: ");
+        int choice = Integer.parseInt(sc.nextLine().trim());
+
+        switch (choice) {
+            case 1: {
+                int[] arr = readInts(sc);
+                System.out.print("Enter k: ");
+                int k = Integer.parseInt(sc.nextLine().trim());
+                System.out.println("Result: " + obj.problem1(arr, k));
+                break;
+            }
+            case 2: {
+                int[] arr = readInts(sc);
+                System.out.print("Enter k: ");
+                int k = Integer.parseInt(sc.nextLine().trim());
+                System.out.println("Result: " + sliding_window(arr, k));
+                break;
+            }
+            default:
+                System.out.println("Invalid choice.");
+        }
+    }
+
+    private static int[] readInts(Scanner sc) {
+        System.out.print("Enter numbers separated by spaces: ");
+        String[] parts = sc.nextLine().trim().split("\\s+");
+        int[] arr = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) {
+            arr[i] = Integer.parseInt(parts[i]);
+        }
+        return arr;
     }
 }
