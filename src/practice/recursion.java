@@ -28,12 +28,10 @@ class recursion {
         }
     }
 
-    int power(int x, int n) {
-        if (n == 0)
-            return 1;
-        if (n == 1)
-            return x;
-        return x * power(x, n - 1);
+    int power(int base, int exp) {
+        if (exp == 0)
+            return 1; // Any number to the power of 0 is 1
+        return base * power(base, exp - 1);
     }
 
     int findMax(int[] arr, int n) {
@@ -45,6 +43,51 @@ class recursion {
             arr[n + 1] = temp;
         }
         return findMax(arr, n + 1);
+    }
+
+    int factorial(int n) {
+        if (n == 0)
+            return 1;
+        return n * factorial(n - 1);
+    }
+
+    int fibonacci(int n) {
+        if (n <= 1)
+            return n; // Base cases: 0 returns 0, 1 returns 1
+        return fibonacci(n - 1) + fibonacci(n - 2);
+    }
+
+    int tribonacci(int n) {
+        if (n == 0)
+            return 0;
+        if (n == 1 || n == 2)
+            return 1;
+        return tribonacci(n - 1) + tribonacci(n - 2) + tribonacci(n - 3);
+    }
+
+    boolean isPrime(int n, int divisor) {
+        if (n <= 1)
+            return false;
+        if (divisor == n)
+            return true; // Reached the number without finding factors
+        if (n % divisor == 0)
+            return false; // Found a factor, not prime
+        return isPrime(n, divisor + 1);
+    }
+
+    int binarySearch(int[] arr, int target, int left, int right) {
+        if (left > right)
+            return -1; // Base case 1: Search space exhausted, target not found
+
+        int mid = left + (right - left) / 2; // Prevents potential integer overflow
+
+        if (arr[mid] == target)
+            return mid; // Base case 2: Target found
+
+        if (arr[mid] > target) {
+            return binarySearch(arr, target, left, mid - 1); // Search left half
+        }
+        return binarySearch(arr, target, mid + 1, right); // Search right half
     }
 
     void string_permutation(String remaining, String result) {
