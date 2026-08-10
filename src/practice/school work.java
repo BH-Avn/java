@@ -140,13 +140,15 @@ class LCM {
             return 1;
         }
 
-        int div = ar[0];
-        for (int i = 1; i < ar.length; i++) {
-            if (ar[i] < div) {
-                div = ar[i];
-            }
+        int div = 2;
+        while (true) {
+        boolean divides = false;
+        for (int x : ar)
+            if (x % div == 0) divides = true;
+        if (divides) break;
+        div++;
         }
-
+        
         int[] next = new int[ar.length];
         for (int i = 0; i < ar.length; i++) {
             next[i] = (ar[i] % div == 0) ? ar[i] / div : ar[i];
