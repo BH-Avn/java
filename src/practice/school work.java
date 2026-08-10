@@ -127,6 +127,24 @@ class digitToWord {
     
 }
 
+
+class LCM {
+    int lcm(int[] ar) {
+        boolean allOne = true;
+        for (int x : ar) if (x != 1) allOne = false;
+        if (allOne) return 1;
+
+        int div = Integer.MAX_VALUE;
+        for (int x : ar) if (x > 1 && x < div) div = x;
+
+        int[] next = new int[ar.length];
+        for (int i = 0; i < ar.length; i++)
+            next[i] = (ar[i] % div == 0) ? ar[i] / div : ar[i];
+
+        return div * lcm(next);
+    }
+}
+
 class Main {
     public static void main(String[] args) {
         Scanner sc = scanner; // shared utils.Base.scanner - see Runner.java for why
@@ -134,27 +152,41 @@ class Main {
         System.out.println("Choose a converter:");
         System.out.println("1. digitToWord (recursive)");
         System.out.println("2. NumberToWords (iterative)");
+        System.out.println("3. LCM of an array (recursive)");
         System.out.print("Enter choice: ");
         int choice = sc.nextInt();
 
-        System.out.print("Enter a number: ");
-        long n = sc.nextLong();
-        sc.nextLine(); // nextLong() leaves the trailing newline unconsumed - flush it
-
         String result;
 
-        if (choice == 2) {
-            NumberToWords obj = new NumberToWords();
-            result = (n < 0) ? "Negative.." + obj.convert(-n) : obj.convert(n);
+        if (choice == 3) {
+            System.out.print("Enter how many numbers: ");
+            int count = sc.nextInt();
+            int[] ar = new int[count];
+            System.out.println("Enter " + count + " numbers:");
+            for (int i = 0; i < count; i++)
+                ar[i] = sc.nextInt();
+            sc.nextLine(); // nextInt() leaves the trailing newline unconsumed - flush it
+
+            LCM obj = new LCM();
+            result = "LCM: " + obj.lcm(ar);
         } else {
-            digitToWord obj = new digitToWord();
-            int num = (int) n;
-            if (num == 0)
-                result = "Zero";
-            else if (num < 0)
-                result = "Negative.." + obj.selector(-num);
-            else
-                result = obj.selector(num);
+            System.out.print("Enter a number: ");
+            long n = sc.nextLong();
+            sc.nextLine(); // nextLong() leaves the trailing newline unconsumed - flush it
+
+            if (choice == 2) {
+                NumberToWords obj = new NumberToWords();
+                result = (n < 0) ? "Negative.." + obj.convert(-n) : obj.convert(n);
+            } else {
+                digitToWord obj = new digitToWord();
+                int num = (int) n;
+                if (num == 0)
+                    result = "Zero";
+                else if (num < 0)
+                    result = "Negative.." + obj.selector(-num);
+                else
+                    result = obj.selector(num);
+            }
         }
 
         System.out.println(result.trim());
