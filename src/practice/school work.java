@@ -131,15 +131,26 @@ class digitToWord {
 class LCM {
     int lcm(int[] ar) {
         boolean allOne = true;
-        for (int x : ar) if (x != 1) allOne = false;
-        if (allOne) return 1;
+        for (int i = 0; i < ar.length; i++) {
+            if (ar[i] != 1) {
+                allOne = false;
+            }
+        }
+        if (allOne) {
+            return 1;
+        }
 
-        int div = Integer.MAX_VALUE;
-        for (int x : ar) if (x > 1 && x < div) div = x;
+        int div = ar[0];
+        for (int i = 1; i < ar.length; i++) {
+            if (ar[i] < div) {
+                div = ar[i];
+            }
+        }
 
         int[] next = new int[ar.length];
-        for (int i = 0; i < ar.length; i++)
+        for (int i = 0; i < ar.length; i++) {
             next[i] = (ar[i] % div == 0) ? ar[i] / div : ar[i];
+        }
 
         return div * lcm(next);
     }
