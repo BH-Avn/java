@@ -3,6 +3,28 @@ package practice;
 import java.util.Scanner;
 import static utils.Base.scanner;
 
+class CharFibo {
+    void Fibo(int n) {
+        System.out.print("Enter number of fibonacci terms: ");
+        int t = scanner.nextInt();
+        scanner.nextLine(); // nextInt() leaves the trailing newline unconsumed - flush it
+
+        String ar[] = new String[Math.max(t, n)];
+
+        System.out.println("Enter First Terms:");
+        for (int i = 0; i < n; i++) {
+            ar[i] = scanner.nextLine().trim().toLowerCase();
+            System.out.println(ar[i]);
+        }
+
+        for (int i = n; i < t; i++) {
+            ar[i] = ar[i - n] + ar[i - n + 1];
+            System.out.println(ar[i]);
+        }
+    }
+
+}
+
 class digitToWord {
     String l1[] = { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
     String l2[] = { "", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety" };
@@ -70,15 +92,13 @@ class digitToWord {
 
 }
 
-
-
- class NumberToWords {
-     String[] ones = { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
-     String[] teens = { "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
+class NumberToWords {
+    String[] ones = { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
+    String[] teens = { "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
             "Eighteen", "Nineteen" };
-     String[] tens = { "", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety" };
+    String[] tens = { "", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety" };
 
-     String twoDigit(int num) {
+    String twoDigit(int num) {
         if (num == 0)
             return "";
         if (num < 10)
@@ -88,7 +108,7 @@ class digitToWord {
         return (tens[num / 10] + " " + ones[num % 10]).trim();
     }
 
-     String threeDigit(int num) {
+    String threeDigit(int num) {
         StringBuilder sb = new StringBuilder();
         if (num >= 100) {
             sb.append(ones[num / 100]).append(" Hundred ");
@@ -98,7 +118,7 @@ class digitToWord {
         return sb.toString().trim();
     }
 
-     String convert(long num) {
+    String convert(long num) {
         if (num == 0)
             return "Zero";
 
@@ -124,9 +144,7 @@ class digitToWord {
         return result.toString().trim();
     }
 
-    
 }
-
 
 class LCM {
     int lcm(int[] ar) {
@@ -142,13 +160,15 @@ class LCM {
 
         int div = 2;
         while (true) {
-        boolean divides = false;
-        for (int x : ar)
-            if (x % div == 0) divides = true;
-        if (divides) break;
-        div++;
+            boolean divides = false;
+            for (int x : ar)
+                if (x % div == 0)
+                    divides = true;
+            if (divides)
+                break;
+            div++;
         }
-        
+
         int[] next = new int[ar.length];
         for (int i = 0; i < ar.length; i++) {
             next[i] = (ar[i] % div == 0) ? ar[i] / div : ar[i];
@@ -158,7 +178,13 @@ class LCM {
     }
 }
 
-class Main {
+class PascalSquare {
+    void square(int n) {
+        // TODO
+    }
+}
+
+class schoolwork {
     public static void main(String[] args) {
         Scanner sc = scanner; // shared utils.Base.scanner - see Runner.java for why
 
@@ -166,6 +192,7 @@ class Main {
         System.out.println("1. digitToWord (recursive)");
         System.out.println("2. NumberToWords (iterative)");
         System.out.println("3. LCM of an array (recursive)");
+        System.out.println("4. Fibonacci terms (string array)");
         System.out.print("Enter choice: ");
         int choice = sc.nextInt();
 
@@ -182,6 +209,14 @@ class Main {
 
             LCM obj = new LCM();
             result = "LCM: " + obj.lcm(ar);
+        } else if (choice == 4) {
+            System.out.print("Enter number of initial terms: ");
+            int n = sc.nextInt();
+            sc.nextLine(); // nextInt() leaves the trailing newline unconsumed - flush it
+
+            CharFibo obj = new CharFibo();
+            obj.Fibo(n);
+            result = null; // Fibo prints its own output
         } else {
             System.out.print("Enter a number: ");
             long n = sc.nextLong();
@@ -202,7 +237,9 @@ class Main {
             }
         }
 
-        System.out.println(result.trim());
-        // Not closing sc: this runs through Runner too, which reuses System.in afterwards.
+        if (result != null)
+            System.out.println(result.trim());
+        // Not closing sc: this runs through Runner too, which reuses System.in
+        // afterwards.
     }
 }
